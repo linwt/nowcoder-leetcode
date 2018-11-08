@@ -1,0 +1,1 @@
+print(' '.join(list(raw_input().split())[::-1]))
