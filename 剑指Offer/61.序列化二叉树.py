@@ -1,4 +1,5 @@
 class Solution:
+    
     def __init__(self):
         self.flag = -1
 
