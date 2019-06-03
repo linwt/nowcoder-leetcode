@@ -17,3 +17,18 @@ class Solution:
                 head = pHead2
                 head.next = self.Merge(pHead1, pHead2.next)
         return head
+   
+
+class Solution:
+    def Merge(self, pHead1, pHead2):
+        p = q = ListNode(None)
+        while pHead1 and pHead2:
+            if pHead1.val < pHead2.val:
+                p.next = pHead1
+                pHead1 = pHead1.next
+            else:
+                p.next = pHead2
+                pHead2 = pHead2.next
+            p = p.next
+        p.next = pHead1 or pHead2
+        return q.next
