@@ -23,3 +23,25 @@ class Solution:
                     result.append(matrix[i][start])
             start += 1
         return result
+    
+   
+class Solution:
+    def printMatrix(self, matrix):
+        if not matrix:
+            return []
+        res = []
+        while matrix:
+            # 弹出第一行
+            res += matrix.pop(0)
+            # 添加最后一列。非空的行才能弹出元素，故需先判断是否为空
+            if matrix and matrix[0]:
+                for row in matrix:
+                    res.append(row.pop())
+            # 弹出最后一行并反转
+            if matrix:
+                res += matrix.pop()[::-1]
+            # 添加第一列
+            if matrix and matrix[0]:
+                for row in matrix[::-1]:
+                    res.append(row.pop(0))
+        return res
