@@ -1,6 +1,7 @@
 # 动态规划：1、大问题分解成小问题    2、重复利用之前的计算结果
 
-# dp存放子串的最长回文子序列长度，先计算相邻两个字符的最长回文长度，利用前面的结果再计算相邻三个字符，以此类推得到整个字符串的结果
+# dp[i][j]存放以s[i]开头、s[j]结尾的子串的最长回文子序列长度
+# 先计算相邻两个字符的最长回文长度，利用前面的结果再计算相邻三个字符，以此类推得到整个字符串的结果
 class Solution(object):
     def longestPalindromeSubseq(self, s):
         n = len(s)
@@ -27,6 +28,7 @@ class Solution(object):
 
 
 # 转化为求s和s[::-1]的最长公共子序列
+# dp[i][j]表示t子串增加字符t[i]、s子串增加字符s[j]后，两者最长公共子序列的长度
 class Solution2(object):
     def longestPalindromeSubseq(self, s):
         if s == s[::-1]:
