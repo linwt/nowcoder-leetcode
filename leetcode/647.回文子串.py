@@ -1,4 +1,4 @@
-# dp[i][j]表示以s[i]开头s[j]结尾的字符串是否为回文串
+# dp[i][j]表示以s[i]开头、s[j]结尾的字符串是否为回文串
 class Solution(object):
     def countSubstrings(self, s):
         n = len(s)
@@ -9,6 +9,11 @@ class Solution(object):
                 dp[i][j] = dp[i+1][j-1] and s[i] == s[j]
         # 计算二维数组的和并减去下三角的和
         return sum(map(sum, dp)) - (n*(n-1)/2)
+# a 0 0 0 1
+# 1 b 0 1 0
+# 1 1 c 0 0
+# 1 1 1 b 0
+# 1 1 1 1 a
 
 
 # 暴力破解，遍历所有子串，是回文串则加1
