@@ -32,7 +32,25 @@ def max_heapify(nums, start, end):
         else:
             break
 
+            
+# 最小堆调整。子节点较小者与父节点交换
+def min_heapify(nums, start, end):
+    root = start
+    while True:
+        child = 2*root+1
+        if child > end:
+            break
+        # 获取较小子节点
+        if child+1 <= end and nums[child] > nums[child+1]:
+            child += 1
+        # 较小子节点成为父节点
+        if nums[child] < nums[root]:
+            nums[child], nums[root] = nums[root], nums[child]
+            root = child
+        else:
+            break
 
+            
 if __name__ == '__main__':
     nums = [2, 1, 6, 7, 9, 5, 0, 4, 3, 8]
     print(heap_sort(nums))
