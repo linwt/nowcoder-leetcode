@@ -27,7 +27,7 @@ public class Heap {
         if (left < n && nums[left] > nums[maxIndex])
             maxIndex = left;
         // 如果有右孩子，且右孩子大于父节点和左孩子，则将最大指针指向右孩子
-        if (right < n && nums[right] > nums[maxIndex] && nums[right] > nums[left])
+        if (right < n && nums[right] > nums[maxIndex])
             maxIndex = right;
         // 如果父节点不是最大值，则将父节点与最大值交换，并且递归调整与父节点交换的位置。
         if (maxIndex != root) {
