@@ -9,6 +9,9 @@ public class Insert {
                     int temp = nums[j];
                     nums[j] = nums[j - 1];
                     nums[j - 1] = temp;
+                } else {
+                    // 左边元素已经排序，本次比较若没有交换则可结束本轮排序
+                    break;
                 }
             }
         }
