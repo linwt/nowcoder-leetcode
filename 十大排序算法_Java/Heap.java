@@ -22,7 +22,8 @@ public class Heap {
     // 堆调整的逻辑：父节点与子节点较大者交换，最终最大值会升到根节点
     private void max_heapify(int[] nums, int root) {
         int maxIndex = root;
-        int left = root * 2, right = root * 2 + 1;
+        // 索引从0开始
+        int left = root * 2 + 1, right = root * 2 + 2;
         // 如果有左孩子，且左孩子大于父节点，则将最大指针指向左孩子
         if (left < n && nums[left] > nums[maxIndex])
             maxIndex = left;
