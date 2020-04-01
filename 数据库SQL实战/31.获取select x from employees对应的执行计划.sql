@@ -1,0 +1,1 @@
+explain select * from employees;
