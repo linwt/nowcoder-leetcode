@@ -7,7 +7,7 @@ public class Heap {
     public int[] heapSort(int[] nums) {
         n = nums.length;
         // 堆的构造需要跟子节点比较，所以从最后一个非叶子结点开始向上构造最大堆
-        for (int i = (n - 1) / 2; i >= 0; i--)
+        for (int i = n / 2 - 1; i >= 0; i--)
             max_heapify(nums, i);
         while (n > 0) {
             // 根节点与最后一个节点交换
