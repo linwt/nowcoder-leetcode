@@ -185,3 +185,43 @@ public class Solution0094 {
         return resList;
     }
 }
+
+
+/*
+* 迭代思路：
+* 1、定义数据结构：列表存放节点值；栈按序存放节点；哈希表标记节点是否已处理过左右节点
+* 2、数据结构初始化：根节点入栈
+* 3、迭代逻辑：
+*    1）栈不为空时遍历栈，弹出栈顶节点
+*    2）判断当前节点是否已经处理过左右节点，处理过节点值存入列表
+*    3）没有则将节点按右中左顺序入栈，弹出时才会是左中右，标记当前节点已处理
+* 4、标记目的：节点已经遍历过，但又暂时不能存入列表，所以需要先按序暂存在栈中，按序弹出再存入列表
+*            作用与递归相同，递归是使用栈帧保存当前变量，当下一层处理完成后，就可以回到当前栈帧的状态，处理当前的数据
+* */
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> resList = new ArrayList<>();
+        if (root == null) {
+            return resList;
+        }
+        Map<TreeNode, Boolean> flagMap = new HashMap<>();
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            root = stack.pop();
+            if (flagMap.getOrDefault(root, false)) {
+                resList.add(root.val);
+            } else {
+                if (root.right != null) {
+                    stack.push(root.right);
+                }
+                stack.push(root);
+                if (root.left != null) {
+                    stack.push(root.left);
+                }
+                flagMap.put(root, true);
+            }
+        }
+        return resList;
+    }
+}
