@@ -134,3 +134,54 @@ class Solution {
         return list;
     }
 }
+
+
+/*
+* 迭代思路：
+* 1、定义数据结构：结果列表存放排序节点值；节点列表按序存放节点；索引列表存放未判断是否有左右子节点的节点
+* 2、数据结构初始化：根节点存入节点列表；索引0存入索引列表
+* 3、迭代逻辑：
+*   1）索引列表不为空时，说明有节点未判断是否有左右子节点，循环遍历索引列表
+*   2）索引列表降序排序，取出最大索引，对该索引的节点进行操作。先处理靠右边的节点，可以防止插入节点时影响了节点列表其他节点的位置
+*   3）是否有子节点存在四种情况：有左右节点、只有右节点、只有左节点、没有左右节点。要分别处理，不同情况节点最终索引位置不同
+*   4）中序遍历：
+*      先插入右节点，再插入左节点
+*      插入右节点是在根节点右边插入，其他结点右移一位
+*      插入左节点是替代了根节点的位置，根节点和其他结点右移一位
+*   5）最大索引的节点判断完左右节点后，移除索引列表的最大索引
+*   6）最终节点列表按序排序，遍历结点列表，将节点值存入结果列表
+* */
+public class Solution0094 {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> resList = new ArrayList<>();
+        if (root == null) {
+            return resList;
+        }
+        List<TreeNode> nodeList = new ArrayList<>();
+        List<Integer> indexList = new ArrayList<>();
+        nodeList.add(root);
+        indexList.add(0);
+        while (!indexList.isEmpty()) {
+            indexList.sort((o1, o2) -> o2 - o1);
+            int index = indexList.get(0);
+            root = nodeList.get(index);
+            if (root.left != null && root.right != null) {
+                nodeList.add(index + 1, root.right);
+                nodeList.add(index, root.left);
+                indexList.add(index + 2);
+                indexList.add(index);
+            } else if (root.left != null) {
+                nodeList.add(index, root.left);
+                indexList.add(index);
+            } else if (root.right != null) {
+                nodeList.add(index + 1, root.right);
+                indexList.add(index + 1);
+            }
+            indexList.remove(0);
+        }
+        for (TreeNode node : nodeList) {
+            resList.add(node.val);
+        }
+        return resList;
+    }
+}
