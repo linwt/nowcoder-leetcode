@@ -172,3 +172,37 @@ class Solution {
         return resList;
     }
 }
+
+
+/*
+ * 迭代思路：
+ * 1、简单理解：把左子树塞到根节点和右节点中间，每个节点都要做同样的操作
+ * 2、节点连接步骤：
+ *    1）前序遍历是中左右，即根节点→左子树→右子树
+ *    2）左子树遍历的最后一个节点是 左子树的最后一个右子节点，因此要将其连接到根节点的右节点上
+ *    3）根节点的右指针要指向左节点，左指针指向空，从而形成中左右的链表
+ * 2、遍历逻辑：
+ *    1）根指针的移动代表着前序遍历的顺序，循环遍历条件是根指针不为空
+ *    2）如果根节点的左节点不为空，则进行节点连接步骤；如果为空，则将节点值存入列表，根指针指向右节点
+ * 3、“114.二叉树展开为链表”的解法
+ * */
+class Solution {
+    public List<Integer> flatten(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        while (root != null) {
+            if (root.left != null) {
+                TreeNode temp = root.left;
+                while (temp.right != null) {
+                    temp = temp.right;
+                }
+                temp.right = root.right;
+                root.right = root.left;
+                root.left = null;
+            } else {
+                list.add(root.val);
+                root = root.right;
+            }
+        }
+        return list;
+    }
+}
