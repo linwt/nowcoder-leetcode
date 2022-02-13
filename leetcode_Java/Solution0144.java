@@ -19,7 +19,7 @@
 
 
 /*
-* 递归思路：
+* 递归思路：遍历⼀遍⼆叉树，结果记录在全局变量中
 * 1、定义数据结构：使用列表成员变量，存储每次递归操作存入的值
 * 2、递归终止条件：节点为空时返回
 * 3、单层递归逻辑：把节点的值存入列表
@@ -38,6 +38,23 @@ class Solution {
         preorderTraversal(root.left);
         preorderTraversal(root.right);
         return list;
+    }
+}
+
+
+/*
+递归思路：分解问题计算出答案。通过维护局部变量，存放子问题的结果，将子结果返回给上一层使用，层层累计处理，得到最终结果
+ */
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+        res.add(root.val);
+        res.addAll(preorderTraversal(root.left));
+        res.addAll(preorderTraversal(root.right));
+        return res;
     }
 }
 
