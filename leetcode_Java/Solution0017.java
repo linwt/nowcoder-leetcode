@@ -1,7 +1,13 @@
 // 电话号码的字母组合
 
 /*
-回溯
+回溯：
+1、使用HashMap定义数字和字符串的对应关系。每个数字代表不同的集合，即求不同集合的子集
+2、定义全局变量res存放所有子结果，sb存放临时子结果
+3、调用递归函数，处理得到所有子结果，返回结果
+4、定义递归函数：
+   1）终止条件，存储子结果
+   2）for循环遍历数字对应的字符串，选择 → 递归 → 撤销，回溯
  */
 class Solution {
     private Map<Character, String> map = new HashMap<Character, String>(){{
