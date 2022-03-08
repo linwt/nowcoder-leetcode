@@ -89,22 +89,31 @@ class Solution {
 
 
 /*
-双指针
+双指针：
+1、变量含义
+    leftMax：左边的最大值，它是从左往右遍历找到的
+    rightMax：右边的最大值，它是从右往左遍历找到的
+    left：从左往右处理的当前下标
+    right：从右往左处理的当前下标
+2、双指针left、right的作用是 从两端向中间遍历整个数组，记录左右最大值，并计算每个位置的雨水
+3、在某个位置i处，它能存的水，取决于它左右两边的最大值中较小的一个，与当前位置的高度差
+4、在某个位置i处，它左边最大值一定是leftMax，右边最大值大于等于rightMax
+   所以如果 leftMax <= rightMax，那么 左边最大值 <= 右边最大值，那么位置i的 左右最大值 较小者就是 leftMax
+   所以当 leftMax <= rightMax 时，就去处理left下标，反之就去处理right下标
  */
 class Solution {
     public int trap(int[] height) {
-        int n = height.length;
-        int sum = 0;
+        int left = 0, right = height.length - 1;
         int leftMax = 0, rightMax = 0;
-        int left = 1, right = n - 2;
-        for (int i = 1; i < n - 1; i++) {
-            if (height[left - 1] < height[right + 1]) {
-                leftMax = Math.max(leftMax, height[left - 1]);
-                sum += (leftMax > height[left]) ? leftMax - height[left] : 0;
+        int sum = 0;
+        while (left <= right) {
+            if (leftMax <= rightMax) {
+                sum += Math.max(0, leftMax - height[left]);
+                leftMax = Math.max(leftMax, height[left]);
                 left++;
             } else {
-                rightMax = Math.max(rightMax, height[right + 1]);
-                sum += (rightMax > height[right]) ? rightMax - height[right] : 0;
+                sum += Math.max(0, rightMax - height[right]);
+                rightMax = Math.max(rightMax, height[right]);
                 right--;
             }
         }
@@ -114,26 +123,32 @@ class Solution {
 
 
 /*
-栈
+单调递减栈：
+1、单调递减栈，height元素作为右柱依次入栈，出现入栈元素（右柱）比栈顶大时，说明在右柱左侧形成了低洼处
+2、栈不为空，且当前元素（右柱）比栈顶（右柱的左侧）大，说明形成低洼处了
+3、低洼处出栈后，栈如果为空，说明没有左柱，不能接雨水
+4、否则，获取低洼处、左柱、右柱的高度，计算雨水。
+  积攒的水 = 距离 * 高度差
+         = (右柱位置-左柱位置-1) * (min(右柱高度, 左柱高度)-低洼处高度)
+5、循环结算完雨水后，右柱入栈，保证了栈内元素单调递减
  */
 class Solution {
     public int trap(int[] height) {
         int sum = 0;
-        int index = 0;
         Stack<Integer> stack = new Stack<>();
-        while (index < height.length) {
-            while (!stack.empty() && height[index] > height[stack.peek()]) {
-                int outVal = height[stack.peek()];
-                stack.pop();
+        for (int right = 0; right < height.length; right++) {
+            while (!stack.empty() && height[right] > height[stack.peek()]) {
+                int bottom = stack.pop();
                 if (stack.empty()) {
                     break;
                 }
-                int distance = index - stack.peek() - 1;
-                int minVal = Math.min(height[stack.peek()], height[index]);
-                sum += distance * (minVal - outVal);
+                int left = stack.peek();
+                int bottomHeight = height[bottom];
+                int leftHeight = height[left];
+                int rightHeight = height[right];
+                sum += (right - left - 1) * (Math.min(leftHeight, rightHeight) - bottomHeight);
             }
-            stack.push(index);
-            index++;
+            stack.push(right);
         }
         return sum;
     }
