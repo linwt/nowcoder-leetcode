@@ -60,3 +60,73 @@ class Solution {
         return dp[n];
     }
 }
+
+
+/*
+广度优先：
+1、memo[i]表示前i个字符是否能由单词拼出
+2、队列queue存放的是dp[i]的索引i，前i个字符能由单词拼出，再继续判断后面的字符
+3、从队列弹出一个起始索引，遍历单词数组，根据单词扩增子串长度，判断子串长度是否合法、dp是否标记过，是否为s的子串、长度是否达到s的长度，
+  满足条件则返回true，否则为有效子串就加入队列继续判断，并标记该子串位置能由单词拼出
+4、遍历结束都不满足则返回false
+ */
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int n = s.length();
+        boolean[] memo = new boolean[n + 1];
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(0);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size > 0) {
+                int start = queue.poll();
+                for (String word : wordDict) {
+                    int nextStart = start + word.length();
+                    if (nextStart > n || memo[nextStart]) {
+                        continue;
+                    }
+                    if (s.startsWith(word, start)) {
+                        if (nextStart == n) {
+                            return true;
+                        }
+                        memo[nextStart] = true;
+                        queue.add(nextStart);
+                    }
+                }
+                size--;
+            }
+        }
+        return false;
+    }
+}
+
+
+/*
+深度优先：
+1、memo[i]表示前i个字符是否能由单词拼出。被标记为true表示子串能由单词拼出，但是最终不能拼出s，因为递归是一次性判断是否成功，所以该标记用于避免重复处理
+2、dfs(start) 输入参数表示前start个字符能由单词拼出，输出 前start个字符分别拼接单词数组的单词后的子串，是否为s的子串
+3、终止条件：子串有效且达到s的长度时返回true，拼接单词的子串都无效时返回false
+4、调用递归函数：子串有效但未达到s的长度，递归判断子串继续拼接单词后，是否有效且达到s的长度
+ */
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        boolean[] memo = new boolean[s.length() + 1];
+        return dfs(s, wordDict, 0, memo);
+    }
+
+    private boolean dfs(String s, List<String> wordDict, int start, boolean[] memo) {
+        for (String word : wordDict) {
+            int nextStart = start + word.length();
+            if (nextStart > s.length() || memo[nextStart]) {
+                continue;
+            }
+            if (s.startsWith(word, start)) {
+                if (nextStart == s.length() || dfs(s, wordDict, nextStart, memo)) {
+                    return true;
+                }
+                memo[nextStart] = true;
+            }
+        }
+        return false;
+    }
+}
