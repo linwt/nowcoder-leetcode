@@ -43,12 +43,13 @@ class Solution {
 
 /*
 动态规划思路：
-1、dp[i]表示以i结尾子串的最大值
-2、初始条件：dp[0] = nums[0]
-3、状态转移方程：
-    if (dp[i - 1] > 0) dp[i] = dp[i - 1] + nums[i];
-    else dp[i] = nums[i];
-4、从dp数组中每个局部最大值获取全局最大值
+1、题目：给你一个整数数组 nums，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。子数组是数组中的一个连续部分。
+2、题目简化：求数组nums的具有最大和的连续子数组的和。要先求多个局部连续子数组的最大和，再从多个局部最大中得到全局最大
+3、定义dp数组：dp[i]表示以索引i结尾的连续子数组的最大和
+4、状态转移方程：dp[i] = Math.max(nums[i], nums[i] + dp[i - 1]);
+5、初始化：dp[0] = nums[0];
+6、遍历dp数组填表：一个for循环遍历dp数组，根据状态转移方程推断计算未知结果并填表
+7、返回结果：dp数组的最大值就是具有最大和的连续子数组的和
  */
 class Solution {
     public int maxSubArray(int[] nums) {
@@ -56,16 +57,8 @@ class Solution {
         int[] dp = new int[n];
         dp[0] = nums[0];
         for (int i = 1; i < n; i++) {
-            if (dp[i - 1] > 0) {
-                dp[i] = dp[i - 1] + nums[i];
-            } else {
-                dp[i] = nums[i];
-            }
+            dp[i] = Math.max(nums[i], nums[i] + dp[i - 1]);
         }
-        int res = dp[0];
-        for (int i = 1; i < n; i++) {
-            res = Math.max(res, dp[i]);
-        }
-        return res;
+        return Arrays.stream(dp).max().getAsInt();
     }
 }
