@@ -2,7 +2,7 @@
 
 
 /*
-实际就是“1143.最长公共子序列”
+求字符串t是否为字符串s的子序列，实际就是“1143.最长公共子序列”，得到最长长度再判断是否等于t的长度
  */
 class Solution {
     public boolean isSubsequence(String s, String t) {
