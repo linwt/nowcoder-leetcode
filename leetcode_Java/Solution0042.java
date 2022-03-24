@@ -62,10 +62,12 @@ class Solution {
 逐列累加雨水，动态规划，时间复杂度优化，空间换时间：
 1、为避免重复遍历计算某位置的左右最高柱子，使用dp数组存放最高柱子
 2、定义dp数组：dpLeft[i]表示i位置左边最高柱子的高度，dpRight[i]表示i位置右边最高柱子的高度
-3、状态转移方程：
+3、初始化：
+  1）一维dp数组不用扩容
+  2）dp[0]=0，不用赋值了
+4、状态转移方程：
    dpLeft[i] = Math.max(dpLeft[i - 1], height[i - 1]);
    dpRight[i] = Math.max(dpRight[i + 1], height[i + 1]);
-4、初始化：dp[0]=0，不用赋值了
 4、遍历dp数组填表：一个for循环遍历dp数组填表，求 左边最高柱子的高度 则 从左往右 遍历，求 右边最高柱子的高度 则 从右往左 遍历
  */
 class Solution {

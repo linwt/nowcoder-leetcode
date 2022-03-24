@@ -62,10 +62,10 @@ class Solution {
                     } else {
                         dp[l][r] = dp[l + 1][r - 1] + 2;
                     }
+                    res = Math.max(res, dp[l][r]);
                 } else {
                     dp[l][r] = Math.max(dp[l + 1][r], dp[l][r - 1]);
                 }
-                res = Math.max(res, dp[l][r]);
             }
         }
         return res;
