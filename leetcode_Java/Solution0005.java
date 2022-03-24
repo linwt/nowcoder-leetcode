@@ -85,15 +85,18 @@ class Solution {
 
 
 /*
+与“647.回文子串”相似
 动态规划：动态规划是暴力破解的优化，两者同样需要遍历列举判断所有子串是否为回文串，区别是暴力破解每次都要对子串单独处理判断是否为回文串，动态规划可以利用之前记录的子串结果直接判断当前子串是否为回文串
 1、题目：给你一个字符串 s，找到 s 中最长的回文子串。
 2、题目简化：求字符串s的最长回文子串。要先判断子串是否为回文串，再从回文子串中取最长。
 3、定义dp数组：dp[l][r]表示子串s[l,r]是否为回文子串，l是左区间，r是右区间
-4、状态转移方程：dp[l][r] = (s[l] == s[r]) and (r - l < 3 or dp[l + 1][r - 1])
+4、初始化：
+  1）二维dp数组不用扩容，直接根据dp数组的定义就可以直观地对应进行初始化
+  2）boolean数组创建时，默认值是false，只需要标记为true的地方即可。可以初始化dp数组 dp[i][i] = true，表示1个字符是回文
+5、状态转移方程：dp[l][r] = (s[l] == s[r]) and (r - l < 3 or dp[l + 1][r - 1])
    1）s[l] == s[r] 表示首尾两个字符相等
-   2）r - l < 3 表示去掉首尾后剩余0或1个字符时仍是回文。作用包含了1个字符是回文，所以不用初始化dp数组的对角线为true
+   2）r - l < 3 表示去掉首尾后剩余0或1个字符时仍是回文。作用包含了1个字符是回文，所以不用初始化dp数组单个字符为true
    3）dp[l + 1][r - 1] 表示去掉首尾后的区间是否回文
-5、初始化：boolean数组创建时，默认值是false，只需要标记为true的地方即可。可以初始化dp数组的对角线为true，即dp[i][i] = true，表示1个字符是回文
 6、遍历dp数组填表：一个for遍历子串的右区间，另一个for循环遍历子串的左区间，根据状态转移方程推断计算未知结果并填表，当是回文串时比较并记录最长长度和左右区间位置
 7、返回结果：根据遍历时记录的最长回文子串左右区间位置，截取字符串s得到最长回文子串
 
@@ -103,13 +106,13 @@ s:  b  a  b  a  d
  */
 class Solution {
     public String longestPalindrome(String s) {
-        int len = s.length();
-        if (len < 2) {
+        int n = s.length();
+        if (n < 2) {
             return s;
         }
         int maxLen = 1, start = 0, end = 0;
-        boolean[][] dp = new boolean[len][len];
-        for (int r = 1; r < len; r++) {
+        boolean[][] dp = new boolean[n][n];
+        for (int r = 1; r < n; r++) {
             for (int l = 0; l < r; l++) {
                 if (s.charAt(l) == s.charAt(r) && (r - l < 3 || dp[l + 1][r - 1])) {
                     dp[l][r] = true;
