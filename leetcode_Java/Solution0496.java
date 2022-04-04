@@ -30,17 +30,18 @@ class Solution {
 
 /*
 单调递减栈：
-1、从右到左遍历nums2数组，获取每个元素的下一个更大元素
-  1）栈不为空 且 当前元素大于等于栈顶元素，则栈顶元素出栈，循环处理，直到当前元素小于栈顶元素，那么栈顶元素就是当前元素的下一个更大元素
+1、栈存放的是元素，因为用不到索引。nums1才需要索引来映射到结果数组
+2、从右到左遍历nums2数组，获取每个元素的下一个更大元素
+  1）栈不为空 且 当前元素大于栈顶元素，则栈顶元素出栈，循环处理，直到当前元素小于栈顶元素，那么栈顶元素就是当前元素的下一个更大元素
   2）记录当前元素的下一个更大元素到map中，当前元素入栈
-2、遍历nums1数组，直接从map中获取当前元素的下一个更大元素，存入结果数组，返回结果
+3、遍历nums1数组，直接从map中获取当前元素的下一个更大元素，存入结果数组，返回结果
  */
 class Solution {
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
         Map<Integer, Integer> map = new HashMap<>();
         Deque<Integer> stack = new ArrayDeque<>();
         for (int i = nums2.length - 1; i >= 0; i--) {
-            while (!stack.isEmpty() && nums2[i] >= stack.peek()) {
+            while (!stack.isEmpty() && nums2[i] > stack.peek()) {
                 stack.pop();
             }
             map.put(nums2[i], stack.isEmpty() ? -1 : stack.peek());
@@ -50,6 +51,34 @@ class Solution {
         int[] res = new int[n];
         for (int i = 0; i < n; i++) {
             res[i] = map.get(nums1[i]);
+        }
+        return res;
+    }
+}
+
+
+/*
+单调递减栈：
+1、栈存放的是元素，因为用不到索引。nums1才需要索引来映射到结果数组
+2、从左到右遍历nums2数组，获取每个元素的下一个更大元素
+  1）栈不为空 且 当前元素大于栈顶元素，则栈顶元素出栈，该栈顶元素的下一个更大元素就是当前元素，记录到map中，循环处理，直到当前元素小于栈顶元素
+  2）当前元素入栈
+3、遍历nums1数组，直接从map中获取当前元素的下一个更大元素，存入结果数组，返回结果
+ */
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<>();
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = 0; i < nums2.length; i++) {
+            while (!stack.isEmpty() && nums2[i] > stack.peek()) {
+                map.put(stack.pop(), nums2[i]);
+            }
+            stack.push(nums2[i]);
+        }
+        int n = nums1.length;
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) {
+            res[i] = map.getOrDefault(nums1[i], -1);
         }
         return res;
     }
