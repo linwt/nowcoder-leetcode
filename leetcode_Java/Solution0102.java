@@ -31,12 +31,11 @@ class Solution {
         if (root == null) {
             return list;
         }
-        List<Integer> sonList = new ArrayList<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
-        int count;
         while (!queue.isEmpty()) {
-            count = queue.size();
+            int count = queue.size();
+            List<Integer> sonList = new ArrayList<>();
             while (count > 0) {
                 root = queue.remove();
                 sonList.add(root.val);
@@ -49,7 +48,6 @@ class Solution {
                 count--;
             }
             list.add(sonList);
-            sonList = new ArrayList<>();
         }
         return list;
     }
@@ -106,7 +104,7 @@ class Solution {
 *               局部变量：子列表存放每层节点值
 * 2、辅助标记：整型变量标记 层的深度 对应 子列表的索引
 * 3、递归逻辑：
-*    1）前序遍历，深度优先搜索，每个节点都会遍历到，每层节点最终都是从左到后按序访问
+*    1）前序遍历，深度优先搜索，每个节点都会遍历到，每层节点最终都是从左到右按序访问
 *    2）记录节点所在层的深度，每到新的一层就创建一个新的子列表，层的深度对应子列表的索引，节点值层序存放
 * */
 class Solution {
