@@ -110,3 +110,37 @@ class Solution {
         return before;
     }
 }
+
+
+/*
+递归
+ */
+class Solution {
+    public void reorderList(ListNode head) {
+        int count = 0;
+        ListNode cur = head;
+        while(cur != null){
+            cur = cur.next;
+            count++;
+        }
+        if(count <= 2) {
+            return;
+        }
+        reorderList(head, count);
+    }
+
+    private ListNode reorderList(ListNode head, int count){
+        if(count == 1) {
+            return head;
+        } else if (count == 2) {
+            return head.next;
+        }
+        ListNode midTail = reorderList(head.next, count - 2);
+        ListNode headNext = head.next;
+        ListNode after = midTail.next;
+        midTail.next = after.next;
+        head.next = after;
+        after.next = headNext;
+        return midTail;
+    }
+}
