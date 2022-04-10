@@ -6,16 +6,16 @@ public class Test39 {
         if (root == null) {
             return true;
         }
-        if (Math.abs(TreeDepth(root.left) - TreeDepth(root.right)) > 1) {
+        if (Math.abs(treeDepth(root.left) - treeDepth(root.right)) > 1) {
             return false;
         }
         return IsBalanced_Solution(root.left) && IsBalanced_Solution(root.right);
     }
 
-    public int TreeDepth(TreeNode root) {
+    public int treeDepth(TreeNode root) {
         if (root == null) {
             return 0;
         }
-        return 1 + Math.max(TreeDepth(root.left), TreeDepth(root.right));
+        return 1 + Math.max(treeDepth(root.left), treeDepth(root.right));
     }
 }
