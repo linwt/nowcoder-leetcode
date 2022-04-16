@@ -93,3 +93,51 @@ class Solution {
         return left;
     }
 }
+
+
+/*
+位运算：将 原数组 与 [1,n]数字 转化成二进制后，统计对应每一位1的个数，原数组比范围数组 位上多出来的1 是重复元素位上的1，找到重复元素所有位上的1后 转化得到重复元素值
+nums = [1,3,4,2,2]
+
+1 3 4 2 2 写成二进制
+ 1 [0 0 1]
+ 3 [0 1 1]
+ 4 [1 0 0]
+ 2 [0 1 0]
+ 2 [0 1 0]
+ x  1 3 2
+
+把 1 到 n，也就是 1 2 3 4 也写成二进制
+ 1 [0 0 1]
+ 2 [0 1 0]
+ 3 [0 1 1]
+ 4 [1 0 0]
+ y  1 2 2
+
+res 0 1 0
+ */
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int res = 0, n = nums.length;
+        int maxBit = 31;
+        while (((n - 1) >> maxBit) == 0) {
+            maxBit--;
+        }
+        for (int i = 0; i <= maxBit; i++) {
+            int x = 0, y = 0;
+            int mask = (1 << i);
+            for (int j = 0; j < n; j++) {
+                if ((nums[j] & mask) > 0) {
+                    x++;
+                }
+                if ((j & mask) > 0) {
+                    y++;
+                }
+            }
+            if (x > y) {
+                res |= mask;
+            }
+        }
+        return res;
+    }
+}
