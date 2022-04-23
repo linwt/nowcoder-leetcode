@@ -13,7 +13,7 @@ class ListNode {
 
 
 /*
-递归
+递归：递归到尾部后，逐层将节点值添加到列表
  */
 public class Solution {
     private ArrayList<Integer> list = new ArrayList<Integer>();

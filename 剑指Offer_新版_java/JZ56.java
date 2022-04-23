@@ -7,7 +7,7 @@
 public class Solution {
     public int[] FindNumsAppearOnce (int[] array) {
         int[] res = new int[2];
-        Set<Integer> set = new HashSet();
+        Set<Integer> set = new HashSet<>();
         for (int i = 0; i < array.length; i++) {
             if (set.contains(array[i])) {
                 set.remove(array[i]);
