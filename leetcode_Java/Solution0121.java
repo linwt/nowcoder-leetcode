@@ -80,3 +80,18 @@ class Solution {
         return maxProfit;
     }
 }
+
+public class Solution {
+    public int maxProfit (int[] prices) {
+        int n = prices.length;
+        if (n < 2) {
+            return 0;
+        }
+        int minPrice = prices[0], profit = 0;
+        for (int i = 1; i < n; i++) {
+            profit = Math.max(profit, prices[i] - minPrice);
+            minPrice = Math.min(minPrice, prices[i]);
+        }
+        return profit;
+    }
+}
