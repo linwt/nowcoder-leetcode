@@ -30,10 +30,7 @@ class Solution {
 
     private void dfs(char[][] board, int row, int col) {
         int n = board.length, m = board[0].length;
-        if (row < 0 || col < 0 || row >= n || col >= m) {
-            return;
-        }
-        if (board[row][col] != 'O') {
+        if (row < 0 || col < 0 || row >= n || col >= m || board[row][col] != 'O') {
             return;
         }
         board[row][col] = 'Y';
