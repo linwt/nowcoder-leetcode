@@ -83,3 +83,36 @@ public class Solution {
         }
     }
 }
+
+
+/*
+快速幂
+ */
+public class Solution {
+    public int cutRope(int target) {
+        if (target == 2 || target == 3) {
+            return target - 1;
+        }
+        int x = target % 3;
+        int y = target / 3;
+        if (x == 1) {
+            return pow(3, y - 1) * 4;
+        } else if (x == 2) {
+            return pow(3, y) * 2;
+        } else {
+            return pow(3, y);
+        }
+    }
+
+    private int pow(int base, int num) {
+        int res = 1;
+        while (num > 0) {
+            if ((num & 1) == 1) {
+                res *= base;
+            }
+            base *= base;
+            num >>= 1;
+        }
+        return res;
+    }
+}
