@@ -19,30 +19,43 @@
 
 
 /*
+位置角度：起始位置为1，某个节点在数组中的位置为i，则其
+1)父节点位置：i/2
+2)左子节点位置：2i
+3)右子节点位置：2i+1
+
 递归：
-1、成员变量最大宽度maxWidth，哈希表map保存每层第一个节点的位置值 {深度:位置}
+1、成员变量最大宽度maxWidth，哈希表map保存每层第一个节点的位置值 {层数:首节点位置}
 2、定义递归函数：
   1）方法功能：入参是节点、深度、位置，从map中获取同深度即同层的第一个节点位置，更新计算最大宽度
   2）终止条件：节点为空时，结束
   3）递归逻辑：左右节点同样需要计算其所在层的宽度，因此调用同样的方法递归处理
+===============================================================================
+新模板注释，递归
+1、方法功能：入参是节点、层数、节点位置，计算当前层 当前节点与首节点的宽度，更新最大宽度
+2、终止条件：节点为空时，结束
+3、一个节点处理过程和返回结果：map没有当前层首节点位置，则将当前节点位置存入。计算当前层 当前节点与首节点的距离，更新最大宽度
+4、递归调用：左右节点同样需要计算宽度，因此调用同样的方法递归处理
+5、递归顺序：前序遍历，左右节点的
+6、使用递归调用结果和返回结果
  */
 class Solution {
     private int maxWidth = 0;
     private Map<Integer, Integer> map = new HashMap<>();
 
     public int widthOfBinaryTree(TreeNode root) {
-        dfs(root, 0, 0);
+        dfs(root, 1, 1);
         return maxWidth;
     }
 
-    private void dfs(TreeNode root, int depth, int pos) {
+    private void dfs(TreeNode root, int layer, int pos) {
         if (root == null) {
             return;
         }
-        map.computeIfAbsent(depth, key -> pos);
-        maxWidth = Math.max(maxWidth, pos - map.get(depth) + 1);
-        dfs(root.left, depth + 1, 2 * pos);
-        dfs(root.right, depth + 1, 2 * pos + 1);
+        map.computeIfAbsent(layer, key -> pos);
+        maxWidth = Math.max(maxWidth, pos - map.get(layer) + 1);
+        dfs(root.left, layer + 1, 2 * pos);
+        dfs(root.right, layer + 1, 2 * pos + 1);
     }
 }
 

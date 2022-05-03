@@ -18,13 +18,21 @@
  */
 
 
-/**
- * 递归思路：
- * 1、方法功能：入参是两个数组，两个数组都为空时返回空，不为空时创建、返回根节点
- * 2、递归逻辑：
- *    1）根据前、中序数组的特点，拆分出左子树和右子树两部分数组
- *    2）左右子树的数组同样可以调用这个方法，得到左右子树的根节点
- *    3）上一层使用下一层的结果，取下一层左子树的根节点作为当前层的左子节点，取下一层右子树的根节点作为当前层的右子节点
+/*
+递归思路：
+1、方法功能：入参是两个数组，两个数组都为空时返回空，不为空时创建、返回根节点
+2、递归逻辑：
+   1）根据前、中序数组的特点，拆分出左子树和右子树两部分数组
+   2）左右子树的数组同样可以调用这个方法，得到左右子树的根节点
+   3）上一层使用下一层的结果，取下一层左子树的根节点作为当前层的左子节点，取下一层右子树的根节点作为当前层的右子节点
+===============================================================================================
+构造节点递归函数
+1、方法功能：入参是前序、中序数组，构造根节点，并返回根节点
+2、终止条件：两个数组都为空时，返回空
+3、一个节点处理过程和返回结果：获取前序数组首元素，构造根节点，返回根节点
+4、递归调用：左右节点同样需要构造，因此调用同样的方法递归处理，获取结果
+5、递归顺序：前序遍历，要先构造根节点，再去构造左右节点
+6、使用递归调用结果和返回结果：获取左右节点后，将其与根节点连接，然后返回根节点
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
@@ -40,36 +48,46 @@ class Solution {
 }
 
 
-/**
- * 递归思路：
- * 1、数据结构：
- *    1）使用Map存放中序数组的元素和索引，方便直接获取索引，避免了重复遍历获取
- *    2）使用指针表示数组的开始和结束位置，避免了数组的拆分和拷贝，节省额外空间。注意两个指针指向的数组范围是包括左边界，不包括右边界
- * 2、递归逻辑：
- *    1）原方法入参不够用，创建一个新的方法作为递归方法
- *    2）方法的功能：终止条件，当数组为空时，前序起始、结束指针位置相同，返回空；不为空时创建、返回根节点
- *    3）通过指针划分左右子树的数组范围，调用同个方法得到左右子树的根节点
- *    4）上一层使用下一层的结果，取下一层左子树的根节点作为当前层的左子节点，取下一层右子树的根节点作为当前层的右子节点
+/*
+递归思路：
+1、数据结构：
+   1）使用Map存放中序数组的元素和索引，方便直接获取索引，避免了重复遍历获取
+   2）使用指针表示数组的开始和结束位置，避免了数组的拆分和拷贝，节省额外空间。注意两个指针指向的数组范围是包括左边界，不包括右边界
+2、递归逻辑：
+   1）原方法入参不够用，创建一个新的方法作为递归方法
+   2）方法的功能：终止条件，当数组为空时，前序起始、结束指针位置相同，返回空；不为空时创建、返回根节点
+   3）通过指针划分左右子树的数组范围，调用同个方法得到左右子树的根节点
+   4）上一层使用下一层的结果，取下一层左子树的根节点作为当前层的左子节点，取下一层右子树的根节点作为当前层的右子节点
+============================================================================================================
+新注释模板，递归
+构造节点递归函数
+1、方法功能：入参是两个数组、对应的开始和结束边界
+2、终止条件：开始边界等于结束边界，说明数组为空，返回空
+3、一个节点处理过程和返回结果：获取前序数组首元素，构造根节点，返回根节点
+4、递归调用：左右节点同样需要构造，因此调用同样的方法递归处理，获取结果
+5、递归顺序：前序遍历，要先构造根节点，再去构造左右节点
+6、使用递归调用结果和返回结果：获取左右节点后，将其与根节点连接，然后返回根节点
  */
 class Solution {
+    Map<Integer, Integer> map = new HashMap<>();
+
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
             map.put(inorder[i], i);
         }
-        return buildTreeHelper(preorder, 0, preorder.length, inorder, 0, inorder.length, map);
+        return buildTreeHelper(preorder, 0, preorder.length, inorder, 0, inorder.length);
     }
 
-    public TreeNode buildTreeHelper(int[] preorder, int p_start, int p_end, int[] inorder, int i_start, int i_end, Map<Integer, Integer> map) {
-        if (p_start == p_end) {
+    public TreeNode buildTreeHelper(int[] preorder, int pStart, int pEnd, int[] inorder, int iStart, int iEnd) {
+        if (pStart == pEnd) {
             return null;
         }
-        int root_val = preorder[p_start];
-        TreeNode root = new TreeNode(root_val);
-        int i_root_index = map.get(root_val);
-        int left_num = i_root_index - i_start;
-        root.left = buildTreeHelper(preorder, p_start + 1, p_start + left_num + 1, inorder, i_start, i_root_index, map);
-        root.right = buildTreeHelper(preorder, p_start + left_num + 1, p_end, inorder, i_root_index + 1, i_end, map);
+        int rootVal = preorder[pStart];
+        TreeNode root = new TreeNode(rootVal);
+        int iRootIndex = map.get(rootVal);
+        int leftNum = iRootIndex - iStart;
+        root.left = buildTreeHelper(preorder, pStart + 1, pStart + leftNum + 1, inorder, iStart, iRootIndex);
+        root.right = buildTreeHelper(preorder, pStart + leftNum + 1, pEnd, inorder, iRootIndex + 1, iEnd);
         return root;
     }
 }

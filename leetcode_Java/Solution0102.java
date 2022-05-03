@@ -99,33 +99,64 @@ class Solution {
 
 
 /*
-* 递归思路：
-* 1、定义数据结构：成员变量：列表存放递归结果
-*               局部变量：子列表存放每层节点值
-* 2、辅助标记：整型变量标记 层的深度 对应 子列表的索引
-* 3、递归逻辑：
-*    1）前序遍历，深度优先搜索，每个节点都会遍历到，每层节点最终都是从左到右按序访问
-*    2）记录节点所在层的深度，每到新的一层就创建一个新的子列表，层的深度对应子列表的索引，节点值层序存放
+递归思路：
+1、定义数据结构：成员变量：列表存放递归结果
+              局部变量：子列表存放每层节点值
+2、辅助标记：整型变量标记 层的深度 对应 子列表的索引
+3、递归逻辑：
+   1）前序遍历，深度优先搜索，每个节点都会遍历到，每层节点最终都是从左到右按序访问
+   2）记录节点所在层的深度，每到新的一层就创建一个新的子列表，层的深度对应子列表的索引，节点值层序存放
+========================================================================================
+新注释模板，递归
+1、方法功能：入参是节点、层数，将节点值加入该层的子列表中。层数参数逐层累加，标记当前所在层，方便对应获取当前层的子列表
+2、终止条件：节点为空时，结束
+3、一个节点处理过程和返回结果：当该层的子列表未创建时，则创建子列表加入全局列表中。将节点值加入该层的子列表中
+4、递归调用：左右节点同样需要加入对应层的子列表中，因此调用同样的方法处理
+5、递归顺序：前序遍历，要求层序遍历，所以要先处理根节点，再处理左右节点
+6、使用递归调用结果和返回结果：不用接收返回结构，将节点值加入子列表即可
 * */
 class Solution {
-    public List<List<Integer>> list = new ArrayList<>();
+    List<List<Integer>> list = new ArrayList<>();
 
     public List<List<Integer>> levelOrder(TreeNode root) {
-        return dfs(root, 0);
+        dfs(root, 1);
+        return list;
     }
 
-    public List<List<Integer>> dfs(TreeNode root, int deep) {
+    public void dfs(TreeNode root, int layer) {
+        if (root == null) {
+            return;
+        }
+        if (list.size() < layer) {
+            list.add(new ArrayList<>());
+        }
+        list.get(layer - 1).add(root.val);
+        dfs(root.left, layer + 1);
+        dfs(root.right, layer + 1);
+    }
+}
+
+
+/*
+上一解法递归函数返回类型为void，但也可以顺便利用返回结果，不接收处理，目的是最后把结果列表返回了
+ */
+class Solution {
+    List<List<Integer>> list = new ArrayList<>();
+
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        return dfs(root, 1);
+    }
+
+    public void dfs(TreeNode root, int layer) {
         if (root == null) {
             return list;
         }
-        deep++;
-        if (list.size() < deep) {
-            List<Integer> sonList = new ArrayList<>();
-            list.add(sonList);
+        if (list.size() < layer) {
+            list.add(new ArrayList<>());
         }
-        list.get(deep - 1).add(root.val);
-        dfs(root.left, deep);
-        dfs(root.right, deep);
+        list.get(layer - 1).add(root.val);
+        dfs(root.left, layer + 1);
+        dfs(root.right, layer + 1);
         return list;
     }
 }
