@@ -25,6 +25,44 @@ class Solution {
 }
 
 
+/*
+牛顿迭代：从大到小逼近
+1、求根号x的近似值res，先令 res 为 x，即从一个大数开始迭代逼近，不断令 res 等于 (res+x/res)/2，由于是向下取整，当 res * res <= x时，此时res为最终结果值
+2、res要用long类型，计算过程如果为整型会溢出，最后结果再强转为整型即可
+
+  x = 5
+res = 5 → 3 → 2
+ */
+class Solution {
+    public int mySqrt(int x) {
+        long res = x;
+        while (res * res > x) {
+            res = (res + x / res) / 2;
+        }
+        return (int) res;
+    }
+}
+
+
+/*
+暴力：从小到大逼近
+1、从1开始，平方值小于等于x，则继续查找，直到第一个平方值大于x结束循环，返回前一个值
+2、平方值可能会溢出，要转为long类型
+ */
+class Solution {
+    public int mySqrt(int x) {
+        long res = 1;
+        while (res * res <= x) {
+            res++;
+        }
+        return (int) res - 1;
+    }
+}
+
+
+/*
+库函数
+ */
 class Solution {
     public int mySqrt(int x) {
         return (int) Math.pow(x, 0.5);
