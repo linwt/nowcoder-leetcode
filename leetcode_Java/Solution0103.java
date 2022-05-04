@@ -19,7 +19,36 @@
 
 
 /*
-102.二叉树的层序遍历，加上是否反转标记，奇数层不变，偶数层反转子数组
+“102.二叉树的层序遍历”，奇数层正序插入节点值，偶数层逆序插入节点值
+ */
+class Solution {
+    List<List<Integer>> list = new ArrayList<>();
+
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        dfs(root, 1);
+        return list;
+    }
+
+    public void dfs(TreeNode root, int layer) {
+        if (root == null) {
+            return;
+        }
+        if (list.size() < layer) {
+            list.add(new ArrayList<>());
+        }
+        if (layer % 2 == 1) {
+            list.get(layer - 1).add(root.val);
+        } else {
+            list.get(layer - 1).add(0, root.val);
+        }
+        dfs(root.left, layer + 1);
+        dfs(root.right, layer + 1);
+    }
+}
+
+
+/*
+“102.二叉树的层序遍历”，加上是否反转标记，奇数层不变，偶数层反转子数组
  */
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {

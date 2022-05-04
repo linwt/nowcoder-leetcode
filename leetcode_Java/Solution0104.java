@@ -58,11 +58,10 @@ class Solution {
             return 0;
         }
         int deep = 0;
-        int count;
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(root);
         while (!queue.isEmpty()) {
-            count = queue.size();
+            int count = queue.size();
             while (count > 0) {
                 root = queue.poll();
                 if (root.left != null) {

@@ -112,3 +112,29 @@ class Solution {
         return list;
     }
 }
+
+
+/*
+迭代：“94. 二叉树的中序遍历”，中序遍历过程更新保存前一节点值，当前节点值小于等于前一节点值，则无效，否则有效
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        long pre = Long.MIN_VALUE;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode cur = root;
+        while (cur != null || !stack.isEmpty()) {
+            if (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            } else {
+                cur = stack.pop();
+                if (cur.val <= pre) {
+                    return false;
+                }
+                pre = cur.val;
+                cur = cur.right;
+            }
+        }
+        return true;
+    }
+}
