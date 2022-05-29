@@ -4,7 +4,6 @@
 public class Solution {
     public ArrayList<ArrayList<Integer>> FindContinuousSequence(int sum) {
         ArrayList<ArrayList<Integer>> res = new ArrayList<>();
-
         for (int i = 1; i < sum; i++) {
             int num = i;
             for (int j = i + 1; j < sum; j++) {

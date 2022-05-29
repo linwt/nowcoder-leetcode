@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 // 和为S的两个数字
 public class Test42 {
-    public ArrayList<Integer> FindNumbersWithSum(int [] array, int sum) {
+    public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
         ArrayList<Integer> list = new ArrayList<>();
         int left = 0, right = array.length-1;
         while (left < right) {

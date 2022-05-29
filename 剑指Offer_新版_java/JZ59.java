@@ -1,6 +1,9 @@
 // 59. 滑动窗口的最大值
+// 同力扣“239. 滑动窗口最大值”
 
-
+/*
+单调递减队列，左头右尾
+ */
 public class Solution {
     public ArrayList<Integer> maxInWindows(int[] num, int size) {
         ArrayList<Integer> list = new ArrayList<>();
@@ -10,11 +13,11 @@ public class Solution {
         LinkedList<Integer> queue = new LinkedList<>();
         for (int i = 0; i < num.length; i++) {
             // 去掉比当前值小的值
-            while (!queue.isEmpty() && num[queue.peekLast()] < num[i]) {
+            while (!queue.isEmpty() && num[i] > num[queue.peekLast()]) {
                 queue.pollLast();
             }
             queue.addLast(i);
-            // 判断队首元素是否过期
+            // 判断队首元素是否不在窗口内
             if (queue.peekFirst() == i - size) {
                 queue.pollFirst();
             }

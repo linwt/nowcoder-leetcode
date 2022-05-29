@@ -2,7 +2,7 @@
 
 
 public class Solution {
-    public ArrayList<Integer> FindNumbersWithSum(int [] array, int sum) {
+    public ArrayList<Integer> FindNumbersWithSum(int[] array, int sum) {
         ArrayList<Integer> list = new ArrayList<>();
         int left = 0, right = array.length-1;
         while (left < right) {

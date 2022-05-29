@@ -6,21 +6,20 @@ public class Solution {
         if (pHead == null) {
             return null;
         }
-        ListNode head = new ListNode(0);
-        head.next = pHead;
-        ListNode pre = head, last = head.next;
+        ListNode root = new ListNode(0);
+        root.next = pHead;
+        ListNode pre = root, last = root.next;
         while (last != null) {
             if (last.next != null && last.val == last.next.val) {
                 while (last.next != null && last.val == last.next.val) {
                     last = last.next;
                 }
                 pre.next = last.next;
-                last = last.next;
             } else {
                 pre = pre.next;
-                last = last.next;
             }
+            last = last.next;
         }
-        return head.next;
+        return root.next;
     }
 }

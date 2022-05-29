@@ -21,12 +21,11 @@ public class Solution {
         }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(pRoot);
-        TreeNode node = new TreeNode(0);
         while (queue.size() != 0) {
             int len = queue.size();
             ArrayList<Integer> list = new ArrayList<>();
             while (len > 0) {
-                node = queue.poll();
+                TreeNode node = queue.poll();
                 list.add(node.val);
                 if (node.left != null) {
                     queue.add(node.left);

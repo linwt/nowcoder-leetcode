@@ -43,7 +43,7 @@ class Solution {
                 map.put(c, 1);
             } else {
                 while (s.charAt(start) != c) {
-                    map.put(s.charAt(start), map.get(s.charAt(start)) -1);
+                    map.put(s.charAt(start), map.get(s.charAt(start)) - 1);
                     start++;
                 }
                 start++;

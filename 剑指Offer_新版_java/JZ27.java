@@ -2,14 +2,29 @@
 
 
 public class Solution {
-    public void Mirror(TreeNode root) {
-        if (root != null) {
-            TreeNode temp = null;
-            temp = root.left;
-            root.left = root.right;
-            root.right = temp;
-            Mirror(root.left);
-            Mirror(root.right);
+    public TreeNode Mirror (TreeNode pRoot) {
+        if (pRoot == null) {
+            return null;
         }
+        TreeNode temp = pRoot.left;
+        pRoot.left = pRoot.right;
+        pRoot.right = temp;
+        Mirror(pRoot.left);
+        Mirror(pRoot.right);
+        return pRoot;
+    }
+}
+
+
+public class Solution {
+    public TreeNode Mirror (TreeNode pRoot) {
+        if (pRoot != null) {
+            TreeNode temp = pRoot.left;
+            pRoot.left = pRoot.right;
+            pRoot.right = temp;
+            Mirror(pRoot.left);
+            Mirror(pRoot.right);
+        }
+        return pRoot;
     }
 }

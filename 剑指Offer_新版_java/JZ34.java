@@ -22,14 +22,14 @@ public class Solution {
         return list;
     }
 
-    private void backtrack(TreeNode root, int target, ArrayList pathList) {
+    private void backtrack(TreeNode root, int target, ArrayList<Integer> pathList) {
         if (root == null) {
             return;
         }
         target -= root.val;
         pathList.add(root.val);
         if (target == 0 && root.left == null && root.right == null) {
-            list.add(new ArrayList(pathList));
+            list.add(new ArrayList<>(pathList));
         }
         backtrack(root.left, target, pathList);
         backtrack(root.right, target, pathList);

@@ -21,6 +21,10 @@ public class Solution {
         } else {
             list.add(key);
         }
-        return 1 + stat(threshold, rows, cols, row + 1, col) + stat(threshold, rows, cols, row - 1, col) + stat(threshold, rows, cols, row, col + 1) + stat(threshold, rows, cols, row, col - 1);
+        return 1 +
+                stat(threshold, rows, cols, row + 1, col) +
+                stat(threshold, rows, cols, row - 1, col) +
+                stat(threshold, rows, cols, row, col + 1) +
+                stat(threshold, rows, cols, row, col - 1);
     }
 }

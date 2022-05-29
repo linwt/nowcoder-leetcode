@@ -1,6 +1,40 @@
 // 12. 矩阵中的路径
 
 
+// 新版
+public class Solution {
+    public boolean hasPath(char[][] matrix, String word) {
+        char[] words = word.toCharArray();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (bfs(matrix, words, i, j, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean bfs(char[][] matrix, char[] words, int i, int j, int index) {
+        if (i < 0 || i >= matrix.length || j < 0 || j >= matrix[0].length || matrix[i][j] != words[index]) {
+            return false;
+        }
+        if (index == words.length - 1) {
+            return true;
+        }
+        char temp = matrix[i][j];
+        matrix[i][j] = '.';
+        boolean result = bfs(matrix, words, i - 1, j, index + 1) ||
+                bfs(matrix, words, i + 1, j, index + 1) ||
+                bfs(matrix, words, i, j - 1, index + 1) ||
+                bfs(matrix, words, i, j + 1, index + 1);
+        matrix[i][j] = temp;
+        return result;
+    }
+}
+
+
+// 旧版
 public class Solution {
     public boolean hasPath(char[] matrix, int rows, int cols, char[] str) {
         boolean[] flag = new boolean[matrix.length];
@@ -30,11 +64,8 @@ public class Solution {
                 judge(matrix, rows, cols, flag, str, i + 1, j, k + 1) ||            // 下
                 judge(matrix, rows, cols, flag, str, i, j - 1, k + 1) ||            // 左
                 judge(matrix, rows, cols, flag, str, i, j + 1, k + 1);              // 右
-        if (res) {
-            return true;
-        }
-        // 此路不通，回溯还原
+        // 回溯还原
         flag[index] = false;
-        return false;
+        return res;
     }
 }
