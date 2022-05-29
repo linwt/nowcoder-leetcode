@@ -75,7 +75,8 @@ public class Quick {
         int[] nums = {1, 4, 6, 2, 3, 8, 7, 5, 9};
         Quick quick = new Quick();
         nums = quick.quickSort(nums);
-        for (int num : nums)
+        for (int num : nums) {
             System.out.println(num);
+        }
     }
 }

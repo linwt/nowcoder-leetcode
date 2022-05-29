@@ -6,3 +6,4 @@
 - [2017校招真题编程题汇总](https://www.nowcoder.com/ta/2017test)
 - [2019校招真题编程题汇总](https://www.nowcoder.com/ta/2019test)
 - [数据库SQL实战](https://www.nowcoder.com/ta/sql?query=&asc=true&order=&page=1)
+- [十大经典排序算法动画与解析](https://mp.weixin.qq.com/s/vn3KiV-ez79FmbZ36SX9lg)

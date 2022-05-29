@@ -1,9 +1,9 @@
 package sort;
 
 /*
-1、堆：堆本质上就是一棵完全二叉树，它的每一个节点都必须大于或者小于其子节点
-2、最大堆：每个节点都大于或者等于子树所有节点的堆称为最大堆
-   最小堆：每个节点都小于或者等于子树所有节点的堆称为最小堆
+1、堆：堆本质上就是一棵完全二叉树，它的每一个节点都必须大于等于或者小于等于其子节点
+2、最大堆：每个节点都大于等于子树所有节点的堆称为最大堆
+   最小堆：每个节点都小于等于子树所有节点的堆称为最小堆
 3、数组存储堆，节点的索引关系如下
   索引角度：起始索引为0，某个节点在数组中的索引为i，则其（直接看索引，好记）
   1）父节点索引：(i-1)/2
@@ -51,11 +51,13 @@ public class Heap {
         // 索引从0开始
         int left = root * 2 + 1, right = root * 2 + 2;
         // 如果有左孩子，且左孩子大于父节点，则将最大指针指向左孩子
-        if (left < n && nums[left] > nums[maxIndex])
+        if (left < n && nums[left] > nums[maxIndex]) {
             maxIndex = left;
+        }
         // 如果有右孩子，且右孩子大于父节点和左孩子，则将最大指针指向右孩子
-        if (right < n && nums[right] > nums[maxIndex])
+        if (right < n && nums[right] > nums[maxIndex]) {
             maxIndex = right;
+        }
         // 如果父节点不是最大值，则将父节点与最大值交换，并且递归调整与父节点交换的位置
         if (maxIndex != root) {
             swap(nums, maxIndex, root);
@@ -73,8 +75,9 @@ public class Heap {
         int[] nums = {1, 4, 6, 2, 3, 8, 7, 5, 9};
         Heap heap = new Heap();
         nums = heap.heapSort(nums);
-        for (int num : nums)
+        for (int num : nums) {
             System.out.println(num);
+        }
     }
 }
 
@@ -99,10 +102,12 @@ public class Heap {
     private void maxHeapify(int[] nums, int root) {
         int maxIndex = root;
         int left = root * 2 + 1, right = root * 2 + 2;
-        if (left < n && nums[left] > nums[maxIndex])
+        if (left < n && nums[left] > nums[maxIndex]) {
             maxIndex = left;
-        if (right < n && nums[right] > nums[maxIndex])
+        }
+        if (right < n && nums[right] > nums[maxIndex]) {
             maxIndex = right;
+        }
         if (maxIndex != root) {
             swap(nums, maxIndex, root);
             maxHeapify(nums, maxIndex);
@@ -143,10 +148,12 @@ public class Heap {
     private void minHeapify(int[] nums, int root) {
         int minIndex = root;
         int left = root * 2 + 1, right = root * 2 + 2;
-        if (left < n && nums[left] < nums[minIndex])
+        if (left < n && nums[left] < nums[minIndex]) {
             minIndex = left;
-        if (right < n && nums[right] < nums[minIndex])
+        }
+        if (right < n && nums[right] < nums[minIndex]) {
             minIndex = right;
+        }
         if (minIndex != root) {
             swap(nums, minIndex, root);
             minHeapify(nums, minIndex);
