@@ -33,9 +33,9 @@ public class Merge {
             } else if (r >= right.length) {
                 res[i] = left[l++];
             } else if (left[l] < right[r]) {
-                res[i] = left[r++];
+                res[i] = left[l++];
             } else {
-                res[i] = right[l++];
+                res[i] = right[r++];
             }
         }
         return res;
