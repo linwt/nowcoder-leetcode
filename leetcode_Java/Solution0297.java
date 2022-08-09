@@ -77,20 +77,16 @@ public class Codec {
             return "X,";
         }
         StringBuilder sb = new StringBuilder();
-        ArrayDeque<TreeNode> queue = new ArrayDeque<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty()) {
-            int size = queue.size();
-            while (size > 0) {
-                TreeNode node = queue.poll();
-                if (node != null) {
-                    sb.append(node.val + ",");
-                    queue.add(node.left);
-                    queue.add(node.right);
-                } else {
-                    sb.append("X,");
-                }
-                size--;
+            TreeNode node = queue.poll();
+            if (node != null) {
+                sb.append(node.val + ",");
+                queue.add(node.left);
+                queue.add(node.right);
+            } else {
+                sb.append("X,");
             }
         }
         return sb.toString();
@@ -101,7 +97,7 @@ public class Codec {
             return null;
         }
         String[] splits = data.split(",");
-        Deque<TreeNode> queue = new ArrayDeque<>();
+        Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode(Integer.parseInt(splits[0]));
         queue.add(root);
         int i = 1;

@@ -79,7 +79,7 @@ class Solution {
         for (int i = 1; i < n - 1; i++) {
             dpLeft[i] = Math.max(dpLeft[i - 1], height[i - 1]);
         }
-        for (int i = n - 2; i >= 0; i--) {
+        for (int i = n - 2; i > 0; i--) {
             dpRight[i] = Math.max(dpRight[i + 1], height[i + 1]);
         }
         for (int i = 1; i < n - 1; i++) {

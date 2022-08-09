@@ -65,7 +65,7 @@ public class Solution {
 /*
 1、以上解法通过公式直接计算
 2、x表示余数，余1时跟一个3凑成4进行乘积更大，余2时最后乘上即可，余0则刚好等分直接计算
-3、y表示有多少段3,
+3、y表示有多少段3
  */
 public class Solution {
     public int cutRope(int target) {

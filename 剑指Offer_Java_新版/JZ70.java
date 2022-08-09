@@ -5,8 +5,9 @@
 public class Solution {
     public int RectCover(int target) {
         int a = 0, b = 1;
-        if (target == 0)
+        if (target == 0) {
             return 0;
+        }
         for (int i = 0; i < target; i++) {
             int temp = a;
             a = b;

@@ -14,9 +14,7 @@ public class Solution {
             return true;
         }
         if (p != null && q != null && p.val == q.val) {
-            boolean l = isSameTree(p.left, q.right);
-            boolean r = isSameTree(p.right, q.left);
-            return l && r;
+            return isSameTree(p.left, q.right) && isSameTree(p.right, q.left);
         }
         return false;
     }

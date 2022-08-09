@@ -34,7 +34,7 @@
 * 4、遍历逻辑：
 *    1）根指针的移动代表着前序遍历的顺序，循环遍历条件是根指针不为空
 *    2）如果根节点的左节点不为空，则进行节点连接步骤；如果为空，则将节点值存入列表
-*    3）根节点处理完后看，根指针指向右节点，准备下一轮判断
+*    3）根节点处理完后，根指针指向右节点，准备下一轮判断
 * 5、“144.二叉树的前序遍历”展开为链表的解法
 * */
 class Solution {
@@ -49,9 +49,8 @@ class Solution {
                 pre.right = root.right;
                 root.right = root.left;
                 root.left = null;
-            } else {
-                list.add(root.val);
             }
+            list.add(root.val);
             root = root.right;
         }
         return list;
@@ -80,13 +79,52 @@ class Solution {
                 pre.right = root.right;
                 root.right = root.left;
                 root.left = null;
-            } else {
-                list.add(root.val);
             }
+            list.add(root.val);
             if (root.right != null) {
                 queue.offer(root.right);
             }
         }
         return list;
+    }
+}
+
+
+// 方法返回空写法。迭代
+class Solution {
+    public void flatten(TreeNode root) {
+        while (root != null) {
+            if (root.left != null) {
+                TreeNode pre = root.left;
+                while (pre.right != null) {
+                    pre = pre.right;
+                }
+                pre.right = root.right;
+                root.right = root.left;
+                root.left = null;
+            }
+            root = root.right;
+        }
+    }
+}
+
+
+// 递归
+class Solution {
+    public void flatten(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        if (root.left != null) {
+            TreeNode pre = root.left;
+            while (pre.right != null) {
+                pre = pre.right;
+            }
+            pre.right = root.right;
+            root.right = root.left;
+            root.left = null;
+        }
+        flatten(root.left);
+        flatten(root.right);
     }
 }

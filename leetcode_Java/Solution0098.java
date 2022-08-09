@@ -59,7 +59,7 @@ class Solution {
 
 /*
 递归：
-1、方法功能：入参是节点、最小值、最大值，判断节点值是否有效，即是否满足 min < val < max，有效效返回true，无效返回false
+1、方法功能：入参是节点、最小值、最大值，判断节点值是否有效，即是否满足 min < val < max，有效返回true，无效返回false
 2、终止条件：节点为空返回true
 3、单节点处理过程和返回结果：判断节点值是否有效，即是否满足 min < val < max，有效效返回true，无效返回false
 4、递归调用：左右节点需要同样的操作，因此调用同样的方法处理，获取结果
@@ -75,10 +75,10 @@ class Solution {
         if (root == null) {
             return true;
         }
-        if (max != null && root.val >= max.val) {
+        if (min != null && root.val <= min.val) {
             return false;
         }
-        if (min != null && root.val <= min.val) {
+        if (max != null && root.val >= max.val) {
             return false;
         }
         return isValid(root.left, min, root) && isValid(root.right, root, max);

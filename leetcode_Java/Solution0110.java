@@ -84,9 +84,7 @@ class Solution {
         if (map.get(root) != null) {
             return map.get(root);
         }
-        int left = treeDepth(root.left);
-        int right = treeDepth(root.right);
-        int depth = 1 + Math.max(left, right);
+        int depth = 1 + Math.max(treeDepth(root.left), treeDepth(root.right));
         map.put(root, depth);
         return depth;
     }

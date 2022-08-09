@@ -19,25 +19,27 @@
 class Solution {
     private List<List<String>> res = new ArrayList<>();
     private char[][] chessBoard;
+    private int n;
 
     public List<List<String>> solveNQueens(int n) {
-        chessBoard = new char[n][n];
+        this.n = n;
+        this.chessBoard = new char[n][n];
         for (char[] c : chessBoard) {
             Arrays.fill(c, '.');
         }
-        backtrack(n, 0);
+        backtrack(0);
         return res;
     }
 
-    private void backtrack(int n, int row) {
+    private void backtrack(int row) {
         if (row == n) {
             res.add(arrayToList());
             return;
         }
         for (int col = 0; col < n; col++) {
-            if (isValid(n, row, col)) {
+            if (isValid(row, col)) {
                 chessBoard[row][col] = 'Q';
-                backtrack(n, row + 1);
+                backtrack(row + 1);
                 chessBoard[row][col] = '.';
             }
         }
@@ -53,7 +55,7 @@ class Solution {
     }
 
     // 检查是否有皇后
-    private boolean isValid(int n, int row, int col) {
+    private boolean isValid(int row, int col) {
         // 检查列
         for (int i = 0; i < row; i++) {
             if (chessBoard[i][col] == 'Q') {

@@ -4,8 +4,8 @@
 /*
 1、变量含义
   1）digit：每个数字的位数
-  2）lowLimit：相同位数数字的区间起始值
-  3）highLimit：相同位数数字的区间终止值
+  2）low：相同位数数字的区间起始值
+  3）high：相同位数数字的区间终止值
   4）count：相同位数数字的区间内数字个数
 2、算法过程
   1）初始化变量
@@ -23,15 +23,15 @@ offset = 707 % 3 = 2
 public class Solution {
     public int findNthDigit (int n) {
         int digit = 1;
-        long lowLimit = 0, highLimit = 10, count = 10;
+        long low = 0, high = 10, count = 10;
         while (n > count) {
             n -= count;
-            lowLimit = highLimit;
-            highLimit *= 10;
+            low = high;
+            high *= 10;
             digit++;
-            count = (highLimit - lowLimit) * digit;
+            count = (high - low) * digit;
         }
-        int num = lowLimit + n / digit;
+        int num = low + n / digit;
         int offset = n % digit;
         return String.valueOf(num).charAt(offset) - '0';
     }
